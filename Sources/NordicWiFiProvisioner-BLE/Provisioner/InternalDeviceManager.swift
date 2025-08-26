@@ -185,6 +185,7 @@ extension InternalDeviceManager: CBCentralManagerDelegate {
         self.connectionInfo = BluetoothConnectionInfo(peripheral: peripheral)
         peripheral.delegate = self
         peripheral.discoverServices([ServiceID.wifi.cbm])
+        self.connectedPeripheral = peripheral
     }
 
     func centralManager(_ central: CBMCentralManager, didFailToConnect peripheral: CBMPeripheral, error: Error?) {
@@ -196,6 +197,7 @@ extension InternalDeviceManager: CBCentralManagerDelegate {
     func centralManager(_ central: CBMCentralManager, didDisconnectPeripheral peripheral: CBMPeripheral, error: Error?) {
         connectionDelegate?.deviceManagerDisconnectedDevice(provisioner, error: error)
         self.connectionState = .disconnected
+        self.connectedPeripheral = nil
     }
 }
 
